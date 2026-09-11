@@ -21,15 +21,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.allmycode.jetreader.navigation.ReaderScreens
 import kotlinx.coroutines.delay
 
-@Preview
+
 @Composable
-fun SplashScreen(navController: NavController = NavController(context = LocalContext.current)) {
+fun SplashScreen(navController: NavController) {
     val scale = remember {
         Animatable(0f)
     }
@@ -41,6 +40,8 @@ fun SplashScreen(navController: NavController = NavController(context = LocalCon
                         .getInterpolation(it)
                 }))
         delay(2000L)
+
+        navController.navigate(ReaderScreens.LoginScreen.name)
     }
 
     Surface(modifier = Modifier
