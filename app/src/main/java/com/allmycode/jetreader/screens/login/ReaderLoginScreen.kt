@@ -67,14 +67,15 @@ fun LoginScreen(navController: NavController,
             if (showLoginForm.value) {
                 UserForm(loading = false, isCreateAccount = false) {email, password ->
                     Log.d("Form", "ReaderLoginScreen: $email, $password")
-                    //TO DO: FB login
                     viewModel.signInWithEmailAndPassword(email, password) {
                         navController.navigate(ReaderScreens.HomeScreen.name)
                     }
                 }
             } else {
                 UserForm(loading = false, isCreateAccount = true) { email, password ->
-                    //To DO: create FB account
+                    viewModel.createUserWithEmailAndPassword(email, password) {
+                        navController.navigate(ReaderScreens.HomeScreen.name)
+                    }
                 }
             }
         }
