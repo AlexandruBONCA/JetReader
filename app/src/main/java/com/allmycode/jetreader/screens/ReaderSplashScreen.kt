@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.allmycode.jetreader.components.ReaderLogo
 import com.allmycode.jetreader.navigation.ReaderScreens
 import kotlinx.coroutines.delay
 
@@ -55,8 +56,7 @@ fun SplashScreen(navController: NavController) {
         Column(modifier = Modifier.padding(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
-            Text("A. Reader", style = MaterialTheme.typography.displayLarge,
-                color = Color.Red.copy(alpha = 0.5f))
+            ReaderLogo()
             Spacer(modifier = Modifier.height(15.dp))
             Text("\"Read. Pause. Reflect\"",
                 style = MaterialTheme.typography.headlineMedium,
