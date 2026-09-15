@@ -51,10 +51,12 @@ import com.allmycode.jetreader.R
 import com.allmycode.jetreader.components.EmailInput
 import com.allmycode.jetreader.components.PasswordInput
 import com.allmycode.jetreader.components.ReaderLogo
+import com.allmycode.jetreader.navigation.ReaderScreens
 import kotlin.math.sin
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController,
+                viewModel: LoginScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {
     val showLoginForm = rememberSaveable { mutableStateOf(true)}
     Surface(modifier = Modifier
         .fillMaxSize()) {
@@ -66,6 +68,9 @@ fun LoginScreen(navController: NavController) {
                 UserForm(loading = false, isCreateAccount = false) {email, password ->
                     Log.d("Form", "ReaderLoginScreen: $email, $password")
                     //TO DO: FB login
+                    viewModel.signInWithEmailAndPassword(email, password) {
+                        navController.navigate(ReaderScreens.HomeScreen.name)
+                    }
                 }
             } else {
                 UserForm(loading = false, isCreateAccount = true) { email, password ->
@@ -81,9 +86,11 @@ fun LoginScreen(navController: NavController) {
             val text = if (showLoginForm.value) "Sign up" else "Login"
             Text(text = if (showLoginForm.value) "New user?" else "Already a user?")
             Text(text,
-                modifier = Modifier.clickable {
-                    showLoginForm.value = !showLoginForm.value
-                }.padding(start = 5.dp,),
+                modifier = Modifier
+                    .clickable {
+                        showLoginForm.value = !showLoginForm.value
+                    }
+                    .padding(start = 5.dp,),
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSecondaryContainer)
         }
@@ -131,7 +138,7 @@ fun UserForm(
     }
 
     SubmitButton(
-        textId = if (!isCreateAccount) "Create Account" else "Login",
+        textId = if (isCreateAccount) "Create Account" else "Login",
         loading = loading,
         validInputs = valid
     ) {
